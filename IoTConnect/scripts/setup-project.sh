@@ -29,11 +29,11 @@ echo "Extracting files from ${cube_zip_name}..."
 unzip -q -o "${cube_zip_name}"
 pushd STM32CubeExpansion_Cloud_AZURE_*/ >/dev/null
 
+# remove the unsupported project
+rm -rf Projects/STM32H573I-DK/Applications/NetXDuo
+
 echo "Copying files from the package over the repository files..."
 cp -nr Drivers Middlewares Projects Utilities .. # do not overwrite existing files
-
-# remove the unsupported project
-rm -rf Projects/B-U585I-IOT02A/Applications/NetXDuo
 
 
 popd >/dev/null

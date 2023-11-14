@@ -4,8 +4,8 @@
 //
 
 
-#ifndef STM32_TFM_PSA_AUTH_DRIVER_H
-#define STM32_TFM_PSA_AUTH_DRIVER_H
+#ifndef STM32_PSA_AUTH_DRIVER_H
+#define STM32_PSA_AUTH_DRIVER_H
 
 #ifdef _cplusplus
 extern   "C" {
@@ -13,18 +13,18 @@ extern   "C" {
 
 #include "iotc_auth_driver.h"
 
-struct stm32_tfm_psa_driver_parameters {
+struct stm32_psa_driver_parameters {
 	// TODO: No parameters for now
     int dummy;
 };
 
-int stm32_tfm_psa_create_auth_driver( //
+int stm32_psa_create_auth_driver( //
 		IotcAuthInterface* driver_interface, //
 		IotcDdimInterface* ddim_interface, // Optional DDIM interface that can be used to dynamically obtain device certificates from IoTConnect
 		IotcAuthInterfaceContext* context, // This context will be returned and can be used to
-		struct stm32_tfm_psa_driver_parameters *driver_parameters //
+		struct stm32_psa_driver_parameters *driver_parameters //
 		);
-int stm32_tfm_psa_release_auth_driver(IotcAuthInterfaceContext* context);
+int stm32_psa_release_auth_driver(IotcAuthInterfaceContext* context);
 
 
 #ifdef _cplusplus

@@ -19,7 +19,7 @@
 #include "sw_auth_driver.h"
 #include "std_component.h"
 #include "metadata.h"
-#include "stm32_tfm_psa_auth_driver.h"
+#include "stm32_psa_auth_driver.h"
 
 extern void nx_azure_iot_adu_agent_driver(NX_AZURE_IOT_ADU_AGENT_DRIVER *driver_req_ptr);
 
@@ -275,7 +275,7 @@ static void on_connection_status(IotConnectConnectionStatus status) {
         break;
     }
     if (NULL != auth_driver_context) {
-    	stm32_tfm_psa_release_auth_driver(auth_driver_context);
+    	stm32_psa_release_auth_driver(auth_driver_context);
     	auth_driver_context = NULL;
     }
 }
@@ -384,10 +384,10 @@ bool app_startup(NX_IP *ip_ptr, NX_PACKET_POOL *pool_ptr, NX_DNS *dns_ptr) {
     	config->auth.type = IOTC_X509;
 
         auth_driver_context = NULL;
-        struct stm32_tfm_psa_driver_parameters parameters = {0}; // dummy, for now
+        struct stm32_psa_driver_parameters parameters = {0}; // dummy, for now
         IotcDdimInterface ddim_interface;
         IotcAuthInterfaceContext auth_context;
-        if(stm32_tfm_psa_create_auth_driver( //
+        if(stm32_psa_create_auth_driver( //
                 &(config->auth.data.x509.auth_interface), //
                 &ddim_interface, //
                 &auth_context, //
@@ -406,13 +406,13 @@ bool app_startup(NX_IP *ip_ptr, NX_PACKET_POOL *pool_ptr, NX_DNS *dns_ptr) {
                 );
         if (0 == cert_size) {
             printf("Unable to get the certificate from the driver.\r\n");
-            stm32_tfm_psa_release_auth_driver(auth_context);
+            stm32_psa_release_auth_driver(auth_context);
             return false;
         }
 
         char* operational_cn = ddim_interface.extract_operational_cn(auth_context);
         if (NULL == operational_cn) {
-            stm32_tfm_psa_release_auth_driver(auth_context);
+            stm32_psa_release_auth_driver(auth_context);
             printf("Unable to get the certificate common name.\r\n");
             return false;
         }

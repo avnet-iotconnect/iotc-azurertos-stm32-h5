@@ -34,9 +34,19 @@
 	</natures>
 	<linkedResources>
 		<link>
+			<name>IoTConnect</name>
+			<type>2</type>
+			<locationURI>PARENT-6-PROJECT_LOC/IoTConnect</locationURI>
+		</link>
+		<link>
 			<name>Nx_Azure_IoT.ioc</name>
 			<type>1</type>
 			<locationURI>PARENT-1-PROJECT_LOC/Nx_Azure_IoT.ioc</locationURI>
+		</link>
+		<link>
+			<name>download.sh</name>
+			<type>1</type>
+			<locationURI>PARENT-1-PROJECT_LOC/download.sh</locationURI>
 		</link>
 		<link>
 			<name>Doc/README.md</name>
@@ -239,6 +249,11 @@
 			<locationURI>PARENT-6-PROJECT_LOC/Drivers/BSP/Components/mx_wifi/core/mx_address.c</locationURI>
 		</link>
 		<link>
+			<name>Drivers/BSP/Components/mx_wifi.c</name>
+			<type>1</type>
+			<locationURI>PARENT-6-PROJECT_LOC/Drivers/BSP/Components/mx_wifi/mx_wifi.c</locationURI>
+		</link>
+		<link>
 			<name>Drivers/BSP/Components/mx_wifi_hci.c</name>
 			<type>1</type>
 			<locationURI>PARENT-6-PROJECT_LOC/Drivers/BSP/Components/mx_wifi/core/mx_wifi_hci.c</locationURI>
@@ -247,16 +262,6 @@
 			<name>Drivers/BSP/Components/mx_wifi_ipc.c</name>
 			<type>1</type>
 			<locationURI>PARENT-6-PROJECT_LOC/Drivers/BSP/Components/mx_wifi/core/mx_wifi_ipc.c</locationURI>
-		</link>
-		<link>
-			<name>Drivers/BSP/Components/io_pattern/mx_wifi_spi.c</name>
-			<type>1</type>
-			<locationURI>PARENT-6-PROJECT_LOC/Drivers/BSP/Components/mx_wifi/io_pattern/mx_wifi_spi.c</locationURI>
-		</link>
-		<link>
-			<name>Drivers/BSP/Components/mx_wifi.c</name>
-			<type>1</type>
-			<locationURI>PARENT-6-PROJECT_LOC/Drivers/BSP/Components/mx_wifi/mx_wifi.c</locationURI>
 		</link>
 		<link>
 			<name>Drivers/BSP/STM32H573I-DK/stm32h573i_discovery.c</name>
@@ -837,16 +842,6 @@
 			<name>Middlewares/NetXDuo/LAN8742_Phy_Interface/nx_stm32_phy_driver.c</name>
 			<type>1</type>
 			<locationURI>PARENT-6-PROJECT_LOC/Middlewares/ST/netxduo/common/drivers/ethernet/lan8742/nx_stm32_phy_driver.c</locationURI>
-		</link>
-		<link>
-			<name>Middlewares/NetXDuo/WiFi_Interface/nx_driver_emw3080.c</name>
-			<type>1</type>
-			<locationURI>PARENT-6-PROJECT_LOC/Middlewares/ST/netxduo/common/drivers/wifi/mxchip/nx_driver_emw3080.c</locationURI>
-		</link>
-		<link>
-			<name>Middlewares/NetXDuo/WiFi_Interface/mx_wifi_azure_rtos.c</name>
-			<type>1</type>
-			<locationURI>PARENT-6-PROJECT_LOC/Middlewares/ST/netxduo/common/drivers/wifi/mxchip/mx_wifi_azure_rtos.c</locationURI>
 		</link>
 		<link>
 			<name>Middlewares/NetXDuo/NX Core/nx_arp_announce_send.c</name>
@@ -4284,6 +4279,16 @@
 			<locationURI>PARENT-6-PROJECT_LOC/Middlewares/ST/netxduo/nx_secure/src/nxe_secure_x509_key_usage_extension_parse.c</locationURI>
 		</link>
 		<link>
+			<name>Middlewares/NetXDuo/WiFi_Interface/mx_wifi_azure_rtos.c</name>
+			<type>1</type>
+			<locationURI>PARENT-6-PROJECT_LOC/Middlewares/ST/netxduo/common/drivers/wifi/mxchip/mx_wifi_azure_rtos.c</locationURI>
+		</link>
+		<link>
+			<name>Middlewares/NetXDuo/WiFi_Interface/nx_driver_emw3080.c</name>
+			<type>1</type>
+			<locationURI>PARENT-6-PROJECT_LOC/Middlewares/ST/netxduo/common/drivers/wifi/mxchip/nx_driver_emw3080.c</locationURI>
+		</link>
+		<link>
 			<name>Middlewares/NetXDuo/web/nx_web_http_client.c</name>
 			<type>1</type>
 			<locationURI>PARENT-6-PROJECT_LOC/Middlewares/ST/netxduo/addons/web/nx_web_http_client.c</locationURI>
@@ -5199,9 +5204,9 @@
 			<locationURI>PARENT-1-PROJECT_LOC/NetXDuo/psa_crypto_ciphersuites/nx_crypto_sha_psa.c</locationURI>
 		</link>
 		<link>
-			<name>download.sh</name>
+			<name>Drivers/BSP/Components/io_pattern/mx_wifi_spi.c</name>
 			<type>1</type>
-			<locationURI>PARENT-1-PROJECT_LOC/download.sh</locationURI>
+			<locationURI>PARENT-6-PROJECT_LOC/Drivers/BSP/Components/mx_wifi/io_pattern/mx_wifi_spi.c</locationURI>
 		</link>
 	</linkedResources>
 </projectDescription>

@@ -20,29 +20,23 @@
 #include <stdio.h>
 #include <string.h>
 #include "metadata.h"
-#include "psa/protected_storage.h"
-#include "stm32u5xx_hal.h" // for resolution to NVIC_SystemReset()
+#include "psa/internal_trusted_storage.h"
+// #include "stm32h5xx_hal_cortex.h" // for resolution to NVIC_SystemReset()
+
 
 #define METADATA_UID 1 // ID in PSA storage
 
 #define VERSION_01 "IOTC01" // metadata version
 
 /* Private macro -------------------------------------------------------------*/
-#define MODIFY_SSID     '1'
-#define MODIFY_PASSWORD '2'
-#define MODIFY_ENV      '3'
-#define MODIFY_CPID     '4'
-#define MODIFY_DUID     '5'
-#define MODIFY_SYM_KEY  '6'
+#define MODIFY_ENV      'e'
+#define MODIFY_CPID     'c'
+#define MODIFY_DUID     'd'
+#define MODIFY_SYM_KEY  's'
 #define CLEAR_AND_RESET '9'
 #define WRITE_AND_RESET '0'
 
 static metadata_storage md;
-
-#if (USE_WIFI == 1)
-char *pWIFI_SSID = md.wifi_ssid;
-char *pWIFI_PASSWORD = md.wifi_pswd;
-#endif
 
 static uint32_t metadata_get_data(void);
 static uint32_t metadata_write_data(void);
@@ -50,6 +44,10 @@ static uint32_t metadata_set_default(void);
 static void flush_up_to_newline(void);
 
 uint32_t config_init(void) {
+#if defined(__GNUC__)
+    setvbuf(stdin, NULL, _IONBF, 0); /* no buffering to be able to input single character */
+#endif /* if defined(__GNUC__) */
+
 	return metadata_get_data();
 }
 
@@ -60,10 +58,6 @@ char config_display_menu(void) {
 	printf(
 			"\r\n* If Device Unique ID (DUID) is blank, auto-generated DUID will be used.");
 	printf("\r\n  This value is displayed later during application startup");
-#if (USE_WIFI == 1)
-	printf("\r\n%c - Set Wi-Fi SSID", MODIFY_SSID);
-	printf("\r\n%c - Set Wi-Fi Password", MODIFY_PASSWORD);
-#endif
 	printf("\r\n%c - Set Environment", MODIFY_ENV);
 	printf("\r\n%c - Set CPID", MODIFY_CPID);
 	printf("\r\n%c - Set DUID", MODIFY_DUID);
@@ -82,22 +76,6 @@ char config_display_menu(void) {
 
 uint32_t config_process_command(char command) {
 	switch (command) {
-#if (USE_WIFI == 1)
-
-	case MODIFY_SSID:
-		printf("%s\r\n", "Enter Wi-Fi SSID:");
-		scanf("%[^\r]31s", md.wifi_ssid);
-		printf("WiFi SSID set to: \"%s\"\r\n", md.wifi_ssid);
-		flush_up_to_newline();
-		break;
-
-	case MODIFY_PASSWORD:
-		printf("%s\r\n", "Enter Wi-Fi Password:");
-		scanf("%[^\r]63s", md.wifi_pswd);
-		printf("WiFi Password set to: \"%s\"\r\n", md.wifi_pswd);
-		flush_up_to_newline();
-		break;
-#endif // USE_WIFI
 
 	case MODIFY_ENV:
 		printf("%s\r\n", "Enter Environment:");
@@ -152,7 +130,7 @@ static uint32_t metadata_get_data(void) {
 	// clear local data first, in case there is any
 	metadata_set_default();
 
-	err = psa_ps_get(METADATA_UID, 0, sizeof(md), &md, &actual_size);
+  	err = (int32_t) psa_its_get(METADATA_UID, 0, sizeof(md), &md, &actual_size);
 
 	if (err) {
 		printf("Failed to get metadata\r\n");
@@ -172,10 +150,6 @@ static uint32_t metadata_get_data(void) {
 	}
 
 	printf("\r\n");
-#if (USE_WIFI == 1)
-	printf("WiFi SSID     : %s\r\n", strlen(md.wifi_ssid) == 0 		? "(not set)" : md.wifi_ssid);
-	printf("WiFi Password : %s\r\n", strlen(md.wifi_pswd) == 0 		? "(not set)" : "*******");
-#endif
 	printf("Environment   : %s\r\n",
 			strlen(md.env) == 0 ? "(not set)" : md.env);
 	printf("CPID          : %s\r\n",
@@ -189,14 +163,10 @@ static uint32_t metadata_get_data(void) {
 }
 
 static uint32_t metadata_write_data(void) {
-	int32_t err;
-
-	err = psa_ps_set(METADATA_UID, sizeof(md), &md, 0);
-
+	psa_status_t err = psa_its_set(METADATA_UID, sizeof(md), &md, 0);
 	if (err) {
 		return METADATA_ERROR;
 	}
-
 	return METADATA_SUCCESS;
 }
 

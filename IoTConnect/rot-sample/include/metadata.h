@@ -27,30 +27,21 @@ extern "C" {
 
 #include <stdint.h>
 
-#if (USE_WIFI == 1)
-#include "mx_wifi.h"
-#else // we have no source for these values
-#define MX_MAX_SSID_LEN (64)
-#define MX_MAX_KEY_LEN (128)
-#endif
-
 #define METADATA_SUCCESS 0
 #define METADATA_ERROR   (!METADATA_SUCCESS)
 
-#define MD_VERSION_STR_SIZE 8
+#define MD_VERSION_STR_SIZE 7
 #define MD_ENV_SIZE         16
 #define MD_CPID_SIZE        64
-#define MD_DUID_SIZE        64 // really max duid is 64 + 1, so making it nicely packed for now
-#define MD_SYM_KEY_SIZE     128
+#define MD_DUID_SIZE        31
+#define MD_SYM_KEY_SIZE     90 // max is 64 bytes, base64 is 4*(n/3) + rounding, so it will be sufficient
 
 typedef struct __attribute__((__packed__)) metadata_storage {
-	char header[MD_VERSION_STR_SIZE];
-	char wifi_ssid[MX_MAX_SSID_LEN]; // defined in mx_wifi.h
-	char wifi_pswd[MX_MAX_KEY_LEN]; // defined in mx_wifi.h
-	char env[MD_ENV_SIZE];
-	char cpid[MD_CPID_SIZE];
-	char duid[MD_DUID_SIZE];
-	char symmetric_key[MD_SYM_KEY_SIZE];
+	char header[MD_VERSION_STR_SIZE + 1]; // Application should not use this value
+	char env[MD_ENV_SIZE + 1];
+	char cpid[MD_CPID_SIZE + 1];
+	char duid[MD_DUID_SIZE + 1];
+	char symmetric_key[MD_SYM_KEY_SIZE + 1];
 } metadata_storage;
 
 uint32_t metadata_init(void);

@@ -5,9 +5,6 @@
 
 #include "iotconnect_app_config.h"
 
-#include "stm32u5xx.h"
-#include "b_u585i_iot02a.h"
-
 #include "nx_api.h"
 #include "nxd_dns.h"
 #include "iotconnect_certs.h"
@@ -235,26 +232,7 @@ static void command_status(IotclEventData data, bool status, const char *command
 static void on_command(IotclEventData data) {
     char *command = iotcl_clone_command(data);
     if (NULL != command) {
-    	if(NULL != strstr(command, "led-red") ) {
-			if (NULL != strstr(command, "on")) {
-				BSP_LED_On(LED_RED);
-			} else {
-				BSP_LED_Off(LED_RED);
-			}
-			command_status(data, true, command, "OK");
-		} else if(NULL != strstr(command, "led-green") ) {
-			if (NULL != strstr(command, "on")) {
-				BSP_LED_On(LED_GREEN);
-			} else {
-				BSP_LED_Off(LED_GREEN);
-			}
-			command_status(data, true, command, "OK");
-		} else if (NULL != strstr(command, "reset-counters") ) {
-			std_comp.ButtonCounter = 0;
-			command_status(data, true, command, "OK");
-		} else {
-			command_status(data, false, command, "Not implemented");
-		}
+		command_status(data, false, command, "Not implemented");
         free((void*) command);
     } else {
         command_status(data, false, "?", "Internal error");
@@ -291,22 +269,7 @@ static void publish_telemetry() {
     UINT status;
     if ((status = std_component_read_sensor_values(&std_comp)) == NX_AZURE_IOT_SUCCESS) {
     	iotcl_telemetry_set_number(msg, "temperature", std_comp.Temperature);
-    	iotcl_telemetry_set_number(msg, "humidity", std_comp.Humidity);
-    	iotcl_telemetry_set_number(msg, "pressure", std_comp.Pressure);
-    	iotcl_telemetry_set_number(msg, "accelerometer.x", std_comp.Acc_X);
-    	iotcl_telemetry_set_number(msg, "accelerometer.y", std_comp.Acc_Y);
-    	iotcl_telemetry_set_number(msg, "accelerometer.z", std_comp.Acc_Z);
-    	iotcl_telemetry_set_number(msg, "magnetometer.x", std_comp.Mag_X);
-    	iotcl_telemetry_set_number(msg, "magnetometer.y", std_comp.Mag_Y);
-    	iotcl_telemetry_set_number(msg, "magnetometer.z", std_comp.Mag_Z);
-    	iotcl_telemetry_set_number(msg, "gyroscope.x", std_comp.Gyro_X);
-    	iotcl_telemetry_set_number(msg, "gyroscope.y", std_comp.Gyro_Y);
-    	iotcl_telemetry_set_number(msg, "gyroscope.z", std_comp.Gyro_Z);
-#if (USE_CELLULAR == 1)
-    	iotcl_telemetry_set_string(msg, "network_type", "Cellular");
-#else
-    	iotcl_telemetry_set_string(msg, "network_type", "WiFi");
-#endif
+
     	// note the hook into app_azure_iot.c for button interrupt handler
     	iotcl_telemetry_set_number(msg, "button_counter", std_comp.ButtonCounter);
 

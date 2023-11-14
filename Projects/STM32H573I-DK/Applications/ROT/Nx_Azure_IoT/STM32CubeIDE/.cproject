@@ -52,6 +52,16 @@
 									<listOptionValue builtIn="false" value="STM32H573xx"/>
 								</option>
 								<option IS_BUILTIN_EMPTY="false" IS_VALUE_EMPTY="false" id="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.c.compiler.option.includepaths.1455835156" name="Include paths (-I)" superClass="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.c.compiler.option.includepaths" useByScannerDiscovery="false" valueType="includePath">
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/IoTConnect/rot-sample/include}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/IoTConnect/iotc-azurertos-sdk/iotc-azrtos-sdk/authentication/include}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/IoTConnect/iotc-azurertos-sdk/iotc-azrtos-sdk/authentication}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/IoTConnect/iotc-azurertos-sdk/iotc-azrtos-sdk/authentication/driver}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/IoTConnect/iotc-azurertos-sdk/iotc-azrtos-sdk/azrtos-layer/include}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/IoTConnect/iotc-azurertos-sdk/iotc-azrtos-sdk/azrtos-layer/azrtos-adu/include}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/IoTConnect/iotc-azurertos-sdk/iotc-azrtos-sdk/azrtos-layer/azrtos-ota/include}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/IoTConnect/iotc-azurertos-sdk/iotc-azrtos-sdk/cJSON}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/IoTConnect/iotc-azurertos-sdk/iotc-azrtos-sdk/include}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/IoTConnect/iotc-azurertos-sdk/iotc-azrtos-sdk/iotc-c-lib/include}&quot;"/>
 									<listOptionValue builtIn="false" value="../../NetXDuo/App"/>
 									<listOptionValue builtIn="false" value="../../Core/Inc"/>
 									<listOptionValue builtIn="false" value="../../AZURE_RTOS/App"/>
@@ -93,7 +103,7 @@
 									<listOptionValue builtIn="false" value="../../../../../../../Middlewares/ST/secure_manager_api/interface/inc"/>
 									<listOptionValue builtIn="false" value="../../../../../../../Utilities/Certificates"/>
 								</option>
-								<option IS_BUILTIN_EMPTY="false" IS_VALUE_EMPTY="false" id="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.c.compiler.option.otherflags.790854253" superClass="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.c.compiler.option.otherflags" valueType="stringList">
+								<option IS_BUILTIN_EMPTY="false" IS_VALUE_EMPTY="false" id="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.c.compiler.option.otherflags.790854253" name="Other flags" superClass="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.c.compiler.option.otherflags" useByScannerDiscovery="true" valueType="stringList">
 									<listOptionValue builtIn="false" value="-Wno-misleading-indentation"/>
 								</option>
 								<inputType id="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.c.compiler.input.c.109500687" superClass="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.c.compiler.input.c"/>
@@ -120,6 +130,9 @@
 							<tool id="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.objcopy.symbolsrec.175801679" name="MCU Output Converter Motorola S-rec with symbols" superClass="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.objcopy.symbolsrec"/>
 						</toolChain>
 					</folderInfo>
+					<sourceEntries>
+						<entry excluding="Application/User/NetXDuo/App/app_azure_iot.c|Application/User/Core/app_config.c|Application/User/NetXDuo/App/nx_azure_iot_ciphersuites.c|IoTConnect/iotc-azurertos-sdk/samples|IoTConnect/iotc-azurertos-sdk/iotc-azrtos-sdk/libTO|IoTConnect/iotc-azurertos-sdk/iotc-azrtos-sdk/iotc-c-lib/tools|IoTConnect/iotc-azurertos-sdk/iotc-azrtos-sdk/iotc-c-lib/tests|IoTConnect/iotc-azurertos-sdk/iotc-azrtos-sdk/cJSON/test.c|IoTConnect/iotc-azurertos-sdk/iotc-azrtos-sdk/cJSON/tests|IoTConnect/iotc-azurertos-sdk/iotc-azrtos-sdk/cJSON/library_config|IoTConnect/iotc-azurertos-sdk/iotc-azrtos-sdk/cJSON/fuzzing|IoTConnect/iotc-azurertos-sdk/iotc-azrtos-sdk/azrtos-layer/nx-http-client|IoTConnect/iotc-azurertos-sdk/iotc-azrtos-sdk/authentication/driver/to_auth_driver.c" flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name=""/>
+					</sourceEntries>
 				</configuration>
 			</storageModule>
 			<storageModule moduleId="org.eclipse.cdt.core.externalSettings"/>
@@ -173,6 +186,16 @@
 									<listOptionValue builtIn="false" value="STM32H573xx"/>
 								</option>
 								<option IS_BUILTIN_EMPTY="false" IS_VALUE_EMPTY="false" id="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.c.compiler.option.includepaths.221552275" name="Include paths (-I)" superClass="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.c.compiler.option.includepaths" useByScannerDiscovery="false" valueType="includePath">
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/IoTConnect/rot-sample/include}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/IoTConnect/iotc-azurertos-sdk/iotc-azrtos-sdk/authentication/include}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/IoTConnect/iotc-azurertos-sdk/iotc-azrtos-sdk/authentication}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/IoTConnect/iotc-azurertos-sdk/iotc-azrtos-sdk/authentication/driver}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/IoTConnect/iotc-azurertos-sdk/iotc-azrtos-sdk/azrtos-layer/include}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/IoTConnect/iotc-azurertos-sdk/iotc-azrtos-sdk/azrtos-layer/azrtos-adu/include}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/IoTConnect/iotc-azurertos-sdk/iotc-azrtos-sdk/azrtos-layer/azrtos-ota/include}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/IoTConnect/iotc-azurertos-sdk/iotc-azrtos-sdk/cJSON}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/IoTConnect/iotc-azurertos-sdk/iotc-azrtos-sdk/include}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/IoTConnect/iotc-azurertos-sdk/iotc-azrtos-sdk/iotc-c-lib/include}&quot;"/>
 									<listOptionValue builtIn="false" value="../../NetXDuo/App"/>
 									<listOptionValue builtIn="false" value="../../Core/Inc"/>
 									<listOptionValue builtIn="false" value="../../AZURE_RTOS/App"/>
@@ -214,7 +237,7 @@
 									<listOptionValue builtIn="false" value="../../../../../../../Middlewares/ST/secure_manager_api/interface/inc"/>
 									<listOptionValue builtIn="false" value="../../../../../../../Utilities/Certificates"/>
 								</option>
-								<option IS_BUILTIN_EMPTY="false" IS_VALUE_EMPTY="false" id="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.c.compiler.option.otherflags.790854253" superClass="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.c.compiler.option.otherflags" valueType="stringList">
+								<option IS_BUILTIN_EMPTY="false" IS_VALUE_EMPTY="false" id="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.c.compiler.option.otherflags.790854253" name="Other flags" superClass="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.c.compiler.option.otherflags" useByScannerDiscovery="true" valueType="stringList">
 									<listOptionValue builtIn="false" value="-Wno-misleading-indentation"/>
 								</option>
 								<inputType id="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.c.compiler.input.c.1895114944" superClass="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.c.compiler.input.c"/>
@@ -241,6 +264,9 @@
 							<tool id="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.objcopy.symbolsrec.608489245" name="MCU Output Converter Motorola S-rec with symbols" superClass="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.objcopy.symbolsrec"/>
 						</toolChain>
 					</folderInfo>
+					<sourceEntries>
+						<entry excluding="Application/User/NetXDuo/App/app_azure_iot.c|Application/User/Core/app_config.c|Application/User/NetXDuo/App/nx_azure_iot_ciphersuites.c|IoTConnect/iotc-azurertos-sdk/samples|IoTConnect/iotc-azurertos-sdk/iotc-azrtos-sdk/libTO|IoTConnect/iotc-azurertos-sdk/iotc-azrtos-sdk/iotc-c-lib/tools|IoTConnect/iotc-azurertos-sdk/iotc-azrtos-sdk/iotc-c-lib/tests|IoTConnect/iotc-azurertos-sdk/iotc-azrtos-sdk/cJSON/test.c|IoTConnect/iotc-azurertos-sdk/iotc-azrtos-sdk/cJSON/tests|IoTConnect/iotc-azurertos-sdk/iotc-azrtos-sdk/cJSON/library_config|IoTConnect/iotc-azurertos-sdk/iotc-azrtos-sdk/cJSON/fuzzing|IoTConnect/iotc-azurertos-sdk/iotc-azrtos-sdk/azrtos-layer/nx-http-client|IoTConnect/iotc-azurertos-sdk/iotc-azrtos-sdk/authentication/driver/to_auth_driver.c" flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name=""/>
+					</sourceEntries>
 				</configuration>
 			</storageModule>
 			<storageModule moduleId="org.eclipse.cdt.core.externalSettings"/>

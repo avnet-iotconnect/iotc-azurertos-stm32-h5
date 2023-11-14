@@ -2,4 +2,5 @@
 
 !/.gitignore
 !/Core
+!/NetXDuo
 !/STM32CubeIDE

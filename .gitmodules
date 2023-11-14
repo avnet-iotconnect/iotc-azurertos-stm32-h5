@@ -1,0 +1,3 @@
+[submodule "IoTConnect/iotc-azurertos-sdk"]
+	path = IoTConnect/iotc-azurertos-sdk
+	url = https://github.com/avnet-iotconnect/iotc-azurertos-sdk.git

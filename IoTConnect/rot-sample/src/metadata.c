@@ -21,7 +21,7 @@
 #include <string.h>
 #include "metadata.h"
 #include "psa/internal_trusted_storage.h"
-// #include "stm32h5xx_hal_cortex.h" // for resolution to NVIC_SystemReset()
+#include "stm32h5xx_hal.h" // for resolution to NVIC_SystemReset()
 
 
 #define METADATA_UID 1 // ID in PSA storage

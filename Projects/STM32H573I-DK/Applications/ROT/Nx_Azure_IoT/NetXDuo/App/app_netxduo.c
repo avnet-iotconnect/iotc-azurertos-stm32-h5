@@ -19,6 +19,7 @@
 /* USER CODE END Header */
 
 /* Includes ------------------------------------------------------------------*/
+#include <stdbool.h>
 #include "app_netxduo.h"
 
 /* Private includes ----------------------------------------------------------*/
@@ -30,6 +31,8 @@
 #endif
 #include "nxd_sntp_client.h"
 #include "app_azure_iot.h"
+#include "azrtos_time.h"
+#include "iotconnect_app_config.h" // iotconnect app config for sntp time server value
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -43,7 +46,10 @@ NX_PACKET_POOL        AppPool;
 NX_IP                 IpInstance;
 NX_DHCP               DhcpClient;
 static NX_DNS         DnsClient;
+
+#if 0
 static NX_SNTP_CLIENT SntpClient;
+#endif
 
 ULONG   IpAddress;
 ULONG   NetMask;
@@ -85,6 +91,7 @@ ULONG   NetMask;
 /* USER CODE BEGIN PV */
 extern      ULONG            UnixTime;
 
+#if 0
 static const char *sntp_servers[] =
 {
   "0.pool.ntp.org",
@@ -94,6 +101,7 @@ static const char *sntp_servers[] =
 };
 
 static UINT sntp_server_index;
+#endif
 
 static ULONG dns_server_address[3];
 static UINT  dns_server_address_size = sizeof(dns_server_address);
@@ -104,10 +112,13 @@ static UINT  dns_server_address_size = sizeof(dns_server_address);
 static VOID App_Main_Thread_Entry(ULONG thread_input);
 static VOID App_Azure_IoT_Thread_Entry(ULONG thread_input);
 static VOID ip_address_change_notify_callback(NX_IP *ip_instance, VOID *ptr);
+
+#if 0
 static UINT unix_time_get(ULONG *unix_time);
 
 static UINT sntp_time_sync_internal(ULONG sntp_server_address);
 static UINT sntp_time_sync(VOID);
+#endif
 
 extern TX_MUTEX ns_ipc_mutex;
 
@@ -254,7 +265,7 @@ UINT MX_NetXDuo_Init(VOID *memory_ptr)
   }
   
   /* Allocate the memory for Azure IoT application thread   */
-  if (tx_byte_allocate(byte_pool, (VOID **) &pointer, THREAD_MEMORY_SIZE, TX_NO_WAIT) != TX_SUCCESS)
+  if (tx_byte_allocate(byte_pool, (VOID **) &pointer, 2 * THREAD_MEMORY_SIZE, TX_NO_WAIT) != TX_SUCCESS)
   {
     printf("tx_byte_allocate (Azure IoT application thread) fail\r\n");
     return TX_POOL_ERROR;
@@ -418,8 +429,9 @@ static VOID App_Azure_IoT_Thread_Entry(ULONG thread_input)
     Error_Handler();
   }
   
-    /* Sync up time by SNTP at start up. */
-  ret = sntp_time_sync();
+  /* Sync up time by SNTP at start up. */
+  //  ret = sntp_time_sync();
+  ret = sntp_time_sync(&IpInstance, &AppPool, &DnsClient, SAMPLE_SNTP_SERVER_NAME);
 
   /* Check status.  */
   if (ret != NX_SUCCESS)
@@ -427,11 +439,14 @@ static VOID App_Azure_IoT_Thread_Entry(ULONG thread_input)
     printf("SNTP Time Sync failed.\r\n");
     Error_Handler();
   }
-  
-  /* run Azure IoT application code */
-  app_azure_iot_entry(&IpInstance, &AppPool, &DnsClient, unix_time_get);
-}
 
+  /* run Azure IoT application code */
+  //app_azure_iot_entry(&IpInstance, &AppPool, &DnsClient, unix_time_get);
+  extern bool app_startup(NX_IP *ip_ptr, NX_PACKET_POOL *pool_ptr, NX_DNS *dns_ptr);
+
+  app_startup(&IpInstance, &AppPool, &DnsClient);
+}
+#if 0
 UINT unix_time_get(ULONG *unix_time)
 {
   /* Return number of seconds since Unix Epoch (1/1/1970 00:00:00).  */
@@ -614,5 +629,7 @@ static UINT sntp_time_sync(VOID)
 
   return NX_NOT_SUCCESSFUL;
 }
+
+#endif // if 0
 
 /* USER CODE END 1 */

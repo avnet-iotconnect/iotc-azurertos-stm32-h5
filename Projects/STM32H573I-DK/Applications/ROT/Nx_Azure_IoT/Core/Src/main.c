@@ -192,6 +192,13 @@ int main(void)
   MX_SPI5_Init();
   MX_DTS_Init();
 
+#ifdef IOTC_ROUTE_MALLOC_TO_TX_BYTE_POOL
+// make sure to do this before any rand() or similar is called.
+// rand() will call malloc()
+  extern UINT malloc_byte_pool_allocate(void);
+  (void)malloc_byte_pool_allocate();
+#endif
+
   /* USER CODE BEGIN 2 */
   /* generate a random seed for C library srand() */
   /* (rand() is used in NetXDuo for TLS and others) */

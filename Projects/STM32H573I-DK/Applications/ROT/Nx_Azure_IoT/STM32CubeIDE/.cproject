@@ -42,6 +42,11 @@
 								<option id="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.c.compiler.option.optimization.level.934267104" name="Optimization level" superClass="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.c.compiler.option.optimization.level" useByScannerDiscovery="false" value="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.c.compiler.option.optimization.level.value.og" valueType="enumerated"/>
 								<option IS_BUILTIN_EMPTY="false" IS_VALUE_EMPTY="false" id="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.c.compiler.option.definedsymbols.807813626" name="Define symbols (-D)" superClass="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.c.compiler.option.definedsymbols" useByScannerDiscovery="false" valueType="definedSymbols">
 									<listOptionValue builtIn="false" value="DEBUG"/>
+									<listOptionValue builtIn="false" value="IOTC_ROUTE_MALLOC_TO_TX_BYTE_POOL"/>
+									<listOptionValue builtIn="false" value="IOTC_NEEDS_C_TIME"/>
+									<listOptionValue builtIn="false" value="IOTC_USE_PSA_CIPHERS"/>
+									<listOptionValue builtIn="false" value="IOTC_NEEDS_GETTIMEOFDAY"/>
+									<listOptionValue builtIn="false" value="NX_WEB_HTTPS_ENABLE"/>
 									<listOptionValue builtIn="false" value="TFM_PSA_API"/>
 									<listOptionValue builtIn="false" value="GET_CONFIG_FROM_SECURE_STORAGE"/>
 									<listOptionValue builtIn="false" value="NX_INCLUDE_USER_DEFINE_FILE"/>
@@ -131,7 +136,7 @@
 						</toolChain>
 					</folderInfo>
 					<sourceEntries>
-						<entry excluding="Application/User/NetXDuo/App/app_azure_iot.c|Application/User/Core/app_config.c|Application/User/NetXDuo/App/nx_azure_iot_ciphersuites.c|IoTConnect/iotc-azurertos-sdk/samples|IoTConnect/iotc-azurertos-sdk/iotc-azrtos-sdk/libTO|IoTConnect/iotc-azurertos-sdk/iotc-azrtos-sdk/iotc-c-lib/tools|IoTConnect/iotc-azurertos-sdk/iotc-azrtos-sdk/iotc-c-lib/tests|IoTConnect/iotc-azurertos-sdk/iotc-azrtos-sdk/cJSON/test.c|IoTConnect/iotc-azurertos-sdk/iotc-azrtos-sdk/cJSON/tests|IoTConnect/iotc-azurertos-sdk/iotc-azrtos-sdk/cJSON/library_config|IoTConnect/iotc-azurertos-sdk/iotc-azrtos-sdk/cJSON/fuzzing|IoTConnect/iotc-azurertos-sdk/iotc-azrtos-sdk/azrtos-layer/nx-http-client|IoTConnect/iotc-azurertos-sdk/iotc-azrtos-sdk/authentication/driver/to_auth_driver.c" flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name=""/>
+						<entry excluding="Application/User/NetXDuo/App/nx_azure_iot_ciphersuites.c|Application/User/NetXDuo/App/app_azure_iot.c|Application/User/Core/app_config.c|IoTConnect/iotc-azurertos-sdk/samples|IoTConnect/iotc-azurertos-sdk/iotc-azrtos-sdk/libTO|IoTConnect/iotc-azurertos-sdk/iotc-azrtos-sdk/iotc-c-lib/tools|IoTConnect/iotc-azurertos-sdk/iotc-azrtos-sdk/iotc-c-lib/tests|IoTConnect/iotc-azurertos-sdk/iotc-azrtos-sdk/cJSON/test.c|IoTConnect/iotc-azurertos-sdk/iotc-azrtos-sdk/cJSON/tests|IoTConnect/iotc-azurertos-sdk/iotc-azrtos-sdk/cJSON/library_config|IoTConnect/iotc-azurertos-sdk/iotc-azrtos-sdk/cJSON/fuzzing|IoTConnect/iotc-azurertos-sdk/iotc-azrtos-sdk/azrtos-layer/nx-http-client|IoTConnect/iotc-azurertos-sdk/iotc-azrtos-sdk/authentication/driver/to_auth_driver.c" flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name=""/>
 					</sourceEntries>
 				</configuration>
 			</storageModule>
@@ -177,6 +182,10 @@
 								<option id="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.c.compiler.option.optimization.level.1261050460" name="Optimization level" superClass="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.c.compiler.option.optimization.level" useByScannerDiscovery="false" value="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.c.compiler.option.optimization.level.value.os" valueType="enumerated"/>
 								<option IS_BUILTIN_EMPTY="false" IS_VALUE_EMPTY="false" id="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.c.compiler.option.definedsymbols.1001069023" name="Define symbols (-D)" superClass="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.c.compiler.option.definedsymbols" useByScannerDiscovery="false" valueType="definedSymbols">
 									<listOptionValue builtIn="false" value="TFM_PSA_API"/>
+									<listOptionValue builtIn="false" value="IOTC_NEEDS_C_TIME"/>
+									<listOptionValue builtIn="false" value="IOTC_USE_PSA_CIPHERS"/>
+									<listOptionValue builtIn="false" value="IOTC_NEEDS_GETTIMEOFDAY"/>
+									<listOptionValue builtIn="false" value="NX_WEB_HTTPS_ENABLE"/>
 									<listOptionValue builtIn="false" value="GET_CONFIG_FROM_SECURE_STORAGE"/>
 									<listOptionValue builtIn="false" value="NX_INCLUDE_USER_DEFINE_FILE"/>
 									<listOptionValue builtIn="false" value="NX_SECURE_INCLUDE_USER_DEFINE_FILE"/>
@@ -265,7 +274,7 @@
 						</toolChain>
 					</folderInfo>
 					<sourceEntries>
-						<entry excluding="Application/User/NetXDuo/App/app_azure_iot.c|Application/User/Core/app_config.c|Application/User/NetXDuo/App/nx_azure_iot_ciphersuites.c|IoTConnect/iotc-azurertos-sdk/samples|IoTConnect/iotc-azurertos-sdk/iotc-azrtos-sdk/libTO|IoTConnect/iotc-azurertos-sdk/iotc-azrtos-sdk/iotc-c-lib/tools|IoTConnect/iotc-azurertos-sdk/iotc-azrtos-sdk/iotc-c-lib/tests|IoTConnect/iotc-azurertos-sdk/iotc-azrtos-sdk/cJSON/test.c|IoTConnect/iotc-azurertos-sdk/iotc-azrtos-sdk/cJSON/tests|IoTConnect/iotc-azurertos-sdk/iotc-azrtos-sdk/cJSON/library_config|IoTConnect/iotc-azurertos-sdk/iotc-azrtos-sdk/cJSON/fuzzing|IoTConnect/iotc-azurertos-sdk/iotc-azrtos-sdk/azrtos-layer/nx-http-client|IoTConnect/iotc-azurertos-sdk/iotc-azrtos-sdk/authentication/driver/to_auth_driver.c" flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name=""/>
+						<entry excluding="Application/User/NetXDuo/App/nx_azure_iot_ciphersuites.c|Application/User/NetXDuo/App/app_azure_iot.c|Application/User/Core/app_config.c|IoTConnect/iotc-azurertos-sdk/samples|IoTConnect/iotc-azurertos-sdk/iotc-azrtos-sdk/libTO|IoTConnect/iotc-azurertos-sdk/iotc-azrtos-sdk/iotc-c-lib/tools|IoTConnect/iotc-azurertos-sdk/iotc-azrtos-sdk/iotc-c-lib/tests|IoTConnect/iotc-azurertos-sdk/iotc-azrtos-sdk/cJSON/test.c|IoTConnect/iotc-azurertos-sdk/iotc-azrtos-sdk/cJSON/tests|IoTConnect/iotc-azurertos-sdk/iotc-azrtos-sdk/cJSON/library_config|IoTConnect/iotc-azurertos-sdk/iotc-azrtos-sdk/cJSON/fuzzing|IoTConnect/iotc-azurertos-sdk/iotc-azrtos-sdk/azrtos-layer/nx-http-client|IoTConnect/iotc-azurertos-sdk/iotc-azrtos-sdk/authentication/driver/to_auth_driver.c" flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name=""/>
 					</sourceEntries>
 				</configuration>
 			</storageModule>

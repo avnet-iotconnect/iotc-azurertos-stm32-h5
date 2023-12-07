@@ -93,9 +93,9 @@ static int stm32_psa_get_cert(IotcAuthInterfaceContext context, uint8_t cert_slo
 
 	UINT status;
     if ((status = device_identity_retrieve_credentials(
-    		&(stm32_psa_context->cert),
+    		&stm32_psa_context->cert,
 			&stm32_psa_context->cert_size,
-			&(stm32_psa_context->key),
+			&stm32_psa_context->key,
 			&stm32_psa_context->key_size
 			))) {
         printf("Failed to retrieve device identity: error code = 0x%08x\r\n", status);
@@ -104,6 +104,8 @@ static int stm32_psa_get_cert(IotcAuthInterfaceContext context, uint8_t cert_slo
 
 	*cert = (uint8_t*)stm32_psa_context->cert;
     *cert_size = stm32_psa_context->cert_size;
+    printf("Key is 0x%x\r\n", *((uint32_t*)stm32_psa_context->key));
+    printf("Key size is %d\r\n", (int)stm32_psa_context->key_size);
 
     return 0;
 }
@@ -126,6 +128,28 @@ static int stm32_psa_get_bootstrap_cert(IotcAuthInterfaceContext context, uint8_
 static int stm32_psa_get_private_key(IotcAuthInterfaceContext context, uint8_t** key, size_t* key_size) {
 	if (!is_context_valid(context)) return -1;
 	struct stm32_psa_driver_context *stm32_psa_context = (struct stm32_psa_driver_context*) context;
+
+    if (stm32_psa_context->key) {
+        // shortcut... skip loading again and avoid printing the cert twice
+        *key = (uint8_t*)stm32_psa_context->key;
+        *key_size = stm32_psa_context->key_size;
+        printf("Key is 0x%x\r\n", *((uint32_t*)stm32_psa_context->key));
+        printf("Key size is %d\r\n", (int)stm32_psa_context->key_size);
+
+        return 0;
+    }
+
+	UINT status;
+    if ((status = device_identity_retrieve_credentials(
+    		&stm32_psa_context->cert,
+			&stm32_psa_context->cert_size,
+			&stm32_psa_context->key,
+			&stm32_psa_context->key_size
+			))) {
+        printf("Failed to retrieve device identity: error code = 0x%08x\r\n", status);
+        return(status);
+    }
+
 	*key = (uint8_t*)stm32_psa_context->key;
 	*key_size = stm32_psa_context->key_size;
 	return 0;

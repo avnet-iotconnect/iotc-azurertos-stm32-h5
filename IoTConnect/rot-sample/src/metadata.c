@@ -93,7 +93,7 @@ uint32_t config_process_command(char command) {
 
 	case MODIFY_DUID:
 		printf("%s\r\n", "Enter DUID:");
-		scanf("%[^\r]63s", md.duid);
+		scanf("%[^\r]32s", md.duid);
 		printf("DUID set to: \"%s\"\r\n", md.duid);
 		flush_up_to_newline();
 		break;

@@ -187,8 +187,8 @@ bool app_startup(NX_IP *ip_ptr, NX_PACKET_POOL *pool_ptr, NX_DNS *dns_ptr) {
     config->env = md->env;
     config->duid = md->duid; // custom device ID
 
-    if (!md->cpid || !md->env || strlen(md->cpid) == 0 || strlen(md->env) == 0) {
-    	printf("ERROR: CPID and Environment must be set in settings\r\n");
+    if (!md->cpid || !md->env || !md->duid || strlen(md->cpid) == 0 || strlen(md->env) == 0 || strlen(md->duid) == 0) {
+    	printf("ERROR: CPID and Environment and device unique ID must be set in settings\r\n");
     }
 
 	UINT status;

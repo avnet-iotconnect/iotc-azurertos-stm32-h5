@@ -45,6 +45,18 @@ pushd X-Cube-SEC-M-H5_*/ >/dev/null
 echo "Copying files from the package over the repository files..."
 cp -nr Projects .. # do not overwrite existing files
 
+patchfiles="\
+Projects/STM32H573I-DK/ROT_Provisioning/SM/provisioning.sh \
+Projects/STM32H573I-DK/ROT_Provisioning/SM/its_blob.sh \
+Projects/STM32H573I-DK/Applications/ROT/Nx_Azure_IoT/prebuild.sh \
+"
+
+echo "Patching ${patchfiles} with a temporary fix for some git bash versions crashing with multiple -e flags on grep..."
+
+for f in ${patchfiles}; do
+  sed -i 's/-e windows//g' $f
+done
+
 popd >/dev/null
 
 

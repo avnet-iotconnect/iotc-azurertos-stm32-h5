@@ -50,8 +50,8 @@ chmod a+x download.sh provisioning.sh regression.sh
   . -maxdepth 1 -type f -name '*.sh' ; \
   find \
   Utilities \( \
-    -name '*.htm*' -a ! -name '*.png'  -a ! -name '*.svg'   -a ! -name '*.jpg' -a ! -name '*.css' \
-    -name '*.zip' \
+    ! -name '*.htm*' -a ! -name '*.png'  -a ! -name '*.svg'   -a ! -name '*.jpg' -a ! -name '*.css' \
+    ! -name '*.zip' \
   \); \
 } | xargs zip stm32h5-binary.zip
 

@@ -12,25 +12,27 @@ rm -f stm32h5-binary.zip download.* provisioning.* regression.*
 
 cat > download.sh <<END
 #/bin/bash
-set -e
+echo Running the script. This can take some time...
 cd Projects/STM32H573I-DK/Applications/ROT/Nx_Azure_IoT/
 ./download.sh
 killall download.sh || true
+read -n 1 -s -r -p "Press any key to continue"
 END
 
 cat > provisioning.sh <<END
 #/bin/bash
-set -e
+echo Running the script. This can take some time...
 cd Projects/STM32H573I-DK/ROT_Provisioning/SM/
 ./provisioning.sh AUTO
+read -n 1 -s -r -p "Press any key to continue"
 END
 
 cat > regression.sh <<END
-#/bin/bash
-set -e
+echo Running the script. This can take some time...
 #/bin/bash
 cd Projects/STM32H573I-DK/ROT_Provisioning/DA/
 ./regression.sh AUTO
+read -n 1 -s -r -p "Press any key to continue"
 END
 
 

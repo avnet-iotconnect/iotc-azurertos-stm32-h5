@@ -15,7 +15,7 @@ cat > download.sh <<END
 echo Running the script. This can take some time...
 cd Projects/STM32H573I-DK/Applications/ROT/Nx_Azure_IoT/
 ./download.sh
-killall download.sh || true
+# NOTE: the executable usually hangs
 read -n 1 -s -r -p "Press any key to continue"
 END
 
@@ -28,8 +28,8 @@ read -n 1 -s -r -p "Press any key to continue"
 END
 
 cat > regression.sh <<END
-echo Running the script. This can take some time...
 #/bin/bash
+echo Running the script. This can take some time...
 cd Projects/STM32H573I-DK/ROT_Provisioning/DA/
 ./regression.sh AUTO
 read -n 1 -s -r -p "Press any key to continue"
@@ -50,8 +50,7 @@ chmod a+x download.sh provisioning.sh regression.sh
   . -maxdepth 1 -type f -name '*.sh' ; \
   find \
   Utilities \( \
-    ! -name '*.htm*' -a ! -name '*.png'  -a ! -name '*.svg'   -a ! -name '*.jpg' -a ! -name '*.css' \
-    ! -name '*.zip' \
+    ! -name '*.htm*' -a ! -name '*.png'  -a ! -name '*.svg'   -a ! -name '*.jpg' \
   \); \
 } | xargs zip stm32h5-binary.zip
 

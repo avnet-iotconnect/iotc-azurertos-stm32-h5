@@ -29,10 +29,10 @@
 #define VERSION_01 "IOTC01" // metadata version
 
 /* Private macro -------------------------------------------------------------*/
-#define MODIFY_ENV      'e'
-#define MODIFY_CPID     'c'
-#define MODIFY_DUID     'd'
-#define MODIFY_SYM_KEY  's'
+#define MODIFY_ENV      '1'
+#define MODIFY_CPID     '2'
+#define MODIFY_DUID     '3'
+#define MODIFY_SYM_KEY  '4'
 #define CLEAR_AND_RESET '9'
 #define WRITE_AND_RESET '0'
 
@@ -53,11 +53,8 @@ uint32_t config_init(void) {
 
 char config_display_menu(void) {
 	char choice;
-	printf("\r\n* Values for CPID and Environment must be set.");
-	printf("\r\n* To use x509 authentication, leave symmetric key blank.");
-	printf(
-			"\r\n* If Device Unique ID (DUID) is blank, auto-generated DUID will be used.");
-	printf("\r\n  This value is displayed later during application startup");
+	printf("\r\n* Values for CPID, Environment and DUID must be set.");
+	printf("\r\n* Symmetric Key should be left empty fir X509 authentication.");
 	printf("\r\n%c - Set Environment", MODIFY_ENV);
 	printf("\r\n%c - Set CPID", MODIFY_CPID);
 	printf("\r\n%c - Set DUID", MODIFY_DUID);

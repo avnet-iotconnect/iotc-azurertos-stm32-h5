@@ -18,11 +18,9 @@
 #include "stm32_psa_auth_driver.h"
 
 static STD_COMPONENT std_comp;
-static char duid_buffer[IOTC_COMMON_NAME_MAX_LEN]; // from ATECC608 common name
 static IotConnectAzrtosConfig azrtos_config;
 static IotcAuthInterfaceContext auth_driver_context = NULL;
 
-static char common_name_buffer[IOTC_COMMON_NAME_MAX_LEN + 1];
 #define APP_VERSION "1.0.0"
 #define std_component_name "std_comp"
 
@@ -144,29 +142,6 @@ static void publish_telemetry() {
     iotcl_destroy_serialized(str);
 }
 
-bool extract_cpid_and_duid_from_operational_cn(IotConnectClientConfig *config, char * operational_cn) {
-	if (!operational_cn) {
-		printf("Unable to extract the operational certificate common name.\r\n");
-		return false;
-	}
-	strcpy(common_name_buffer, operational_cn);
-	bool found_dash = false;
-	for (int i = -0; i < strlen(common_name_buffer); i++) {
-		if (common_name_buffer[i] == '-') {
-			config->cpid = common_name_buffer;
-			config->duid = &common_name_buffer[i+1];
-			common_name_buffer[i] = 0;
-			found_dash = true;
-			break;
-		}
-	}
-	if (!found_dash || 0 == strlen(config->cpid) || 0 == strlen(config->duid)) {
-		printf("Unable to extract CPID and DUID from common name.\r\n");
-		return false;
-	}
-	return true;
-}
-
 
 /* User push button callback*/
 void app_azure_iot_on_user_button_pushed(void) {
@@ -189,6 +164,7 @@ bool app_startup(NX_IP *ip_ptr, NX_PACKET_POOL *pool_ptr, NX_DNS *dns_ptr) {
 
     if (!md->cpid || !md->env || !md->duid || strlen(md->cpid) == 0 || strlen(md->env) == 0 || strlen(md->duid) == 0) {
     	printf("ERROR: CPID and Environment and device unique ID must be set in settings\r\n");
+    	return false;
     }
 
 	UINT status;
@@ -233,26 +209,12 @@ bool app_startup(NX_IP *ip_ptr, NX_PACKET_POOL *pool_ptr, NX_DNS *dns_ptr) {
             return false;
         }
 
-        char* operational_cn = ddim_interface.extract_operational_cn(auth_context);
-        if (NULL == operational_cn) {
-            stm32_psa_release_auth_driver(auth_context);
-            printf("Unable to get the certificate common name.\r\n");
-            return false;
-        }
-        if (!md->duid || strlen(md->duid) == 0) {
-            printf("Using certificate CN as DUID.\r\n");
-            strcpy(duid_buffer, operational_cn);
-            config->duid = duid_buffer;
-        } else {
-            printf("Obtained certificate with CN: %s.\r\n", operational_cn);
-        }
-        printf("DUID: %s\r\n", config->duid);
-
         auth_driver_context = auth_context;
     }
 
     printf("CPID: %s\r\n", config->cpid);
     printf("ENV : %s\r\n", config->env);
+    printf("DUID: %s\r\n", config->duid);
 
     while (true) {
         if (iotconnect_sdk_init(&azrtos_config)) {

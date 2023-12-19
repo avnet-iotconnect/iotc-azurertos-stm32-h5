@@ -193,8 +193,8 @@ static void on_ota(IotclEventData data) {
         if (status) {
             printf("Failed to apply firmware! Error was: %d\r\n", status);
         }
+    }
 }
-
 
 static void command_status(IotclEventData data, bool status, const char *command_name, const char *message) {
     const char *ack = iotcl_create_ack_string_and_destroy_event(data, status, message);

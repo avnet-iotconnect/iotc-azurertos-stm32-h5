@@ -2,3 +2,4 @@
 
 !/.gitignore
 !/nx_secure_user.h
+!/nx_azure_iot_adu_agent_psa_driver.c

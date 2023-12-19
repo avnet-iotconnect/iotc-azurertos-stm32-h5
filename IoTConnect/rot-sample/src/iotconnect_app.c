@@ -22,9 +22,109 @@ static char duid_buffer[IOTC_COMMON_NAME_MAX_LEN]; // from ATECC608 common name
 static IotConnectAzrtosConfig azrtos_config;
 static IotcAuthInterfaceContext auth_driver_context = NULL;
 
+// provided by nx_azure_iot_adu_agent__ns_driver.c:
+extern void nx_azure_iot_adu_agent_ns_driver(NX_AZURE_IOT_ADU_AGENT_DRIVER *driver_req_ptr);
+
 static char common_name_buffer[IOTC_COMMON_NAME_MAX_LEN + 1];
 #define APP_VERSION "1.0.0"
 #define std_component_name "std_comp"
+
+static bool download_event_handler(IotConnectDownloadEvent* event) {
+    switch (event->type) {
+    case IOTC_DL_STATUS:
+        if (event->status == NX_SUCCESS) {
+            printf("Download success\r\n");
+        } else {
+            printf("Download failed with code 0x%x\r\n", event->status);
+        }
+        break;
+    case IOTC_DL_FILE_SIZE:
+        printf("Download file size is %i\r\n", event->file_size);
+        break;
+    case IOTC_DL_DATA:
+        printf("%i%%\r\n", (event->data.offset + event->data.data_size) * 100 / event->data.file_size);
+        break;
+    default:
+        printf("Unknown event type %d received from download client!\r\n", event->type);
+        break;
+    }
+    return true;
+}
+
+// Parses the URL into host and resource strings which will be malloced
+// Ensure to free the two pointers on success
+static UINT split_url(const char *url, char **host_name, char**resource) {
+    int host_name_start = 0;
+    size_t url_len = strlen(url);
+
+    if (!host_name || !resource) {
+        printf("split_url: Invalid usage\r\n");
+        return NX_INVALID_PARAMETERS;
+    }
+    *host_name = NULL;
+    *resource = NULL;
+    int slash_count = 0;
+    for (size_t i = 0; i < url_len; i++) {
+        if (url[i] == '/') {
+            slash_count++;
+            if (slash_count == 2) {
+                host_name_start = i + 1;
+            } else if (slash_count == 3) {
+                const size_t slash_start = i;
+                const size_t host_name_len = i - host_name_start;
+                const size_t resource_len = url_len - i;
+                *host_name = malloc(host_name_len + 1); //+1 for null
+                if (NULL == *host_name) {
+                    return NX_POOL_ERROR;
+                }
+                memcpy(*host_name, &url[host_name_start], host_name_len);
+                (*host_name)[host_name_len] = 0; // terminate the string
+
+                *resource = malloc(resource_len + 1); //+1 for null
+                if (NULL == *resource) {
+                    free(*host_name);
+                    return NX_POOL_ERROR;
+                }
+                memcpy(*resource, &url[slash_start], resource_len);
+                (*resource)[resource_len] = 0; // terminate the string
+
+                return NX_SUCCESS;
+            }
+        }
+    }
+    return NX_INVALID_PARAMETERS; // URL could not be parsed
+}
+
+// Parses the URL into host and path strings.
+// It re-uses the URL storage by splitting it into two null-terminated strings.
+static UINT start_ota(char *url) {
+    IotConnectHttpRequest req = { 0 };
+
+    UINT status = split_url(url, &req.host_name, &req.resource);
+    if (status) {
+        printf("start_ota: Error while splitting the URL, code: 0x%x\r\n", status);
+        return status;
+    }
+
+    req.azrtos_config = &azrtos_config;
+    // URLs should come in with blob.core.windows.net and similar so Digicert cert should work for all
+    req.tls_cert = (unsigned char*) IOTCONNECT_DIGICERT_GLOBAL_ROOT_G2;
+    req.tls_cert_len = IOTCONNECT_DIGICERT_GLOBAL_ROOT_G2_SIZE;
+
+    status = iotc_ota_fw_download(
+            &req,
+			nx_azure_iot_adu_agent_ns_driver,
+            false,
+            download_event_handler);
+    if (status) {
+        printf("OTA Failed with code 0x%x\r\n", status);
+    } else {
+        printf("OTA Download Success\r\n");
+    }
+    free(req.host_name);
+    free(req.resource);
+    return status;
+}
 
 static bool is_app_version_same_as_ota(const char *version) {
     return strcmp(APP_VERSION, version) == 0;
@@ -36,19 +136,29 @@ static bool app_needs_ota_update(const char *version) {
 
 static void on_ota(IotclEventData data) {
     const char *message = NULL;
+    bool needs_ota_commit = false;
     char *url = iotcl_clone_download_url(data, 0);
     bool success = false;
     if (NULL != url) {
         printf("Download URL is: %s\r\n", url);
         const char *version = iotcl_clone_sw_version(data);
-        if (is_app_version_same_as_ota(version)) {
+        if (!version) {
+            printf("Failed to clone SW version! Out of memory?");
+            message = "Failed to clone SW version";
+        } else if (is_app_version_same_as_ota(version)) {
             printf("OTA request for same version %s. Sending success\r\n", version);
             success = true;
             message = "Version is matching";
         } else if (app_needs_ota_update(version)) {
             printf("OTA update is required for version %s.\r\n", version);
-            success = false;
-            message = "Not implemented";
+
+            if (start_ota(url)) {
+                message = "OTA Failed";
+            } else {
+                success = true;
+                needs_ota_commit = true;
+                message = NULL;
+            }
         } else {
             printf("Device firmware version %s is newer than OTA version %s. Sending failure\r\n", APP_VERSION,
                     version);
@@ -78,8 +188,15 @@ static void on_ota(IotclEventData data) {
         iotconnect_sdk_send_packet(ack);
         free((void*) ack);
     }
+    if (needs_ota_commit) {
+        printf("Waiting for ack to be sent by the network\r\n.,,");
+        tx_thread_sleep(5 * NX_IP_PERIODIC_RATE);
+        UINT status = iotc_ota_fw_apply();
+        if (status) {
+            printf("Failed to apply firmware! Error was: %d\r\n", status);
+        }
 }
-
+}
 
 static void command_status(IotclEventData data, bool status, const char *command_name, const char *message) {
     const char *ack = iotcl_create_ack_string_and_destroy_event(data, status, message);

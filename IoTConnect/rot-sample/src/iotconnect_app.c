@@ -26,7 +26,7 @@ static IotcAuthInterfaceContext auth_driver_context = NULL;
 extern void nx_azure_iot_adu_agent_ns_driver(NX_AZURE_IOT_ADU_AGENT_DRIVER *driver_req_ptr);
 
 static char common_name_buffer[IOTC_COMMON_NAME_MAX_LEN + 1];
-#define APP_VERSION "1.0.0"
+#define APP_VERSION "1.1.0"
 #define std_component_name "std_comp"
 
 static bool download_event_handler(IotConnectDownloadEvent* event) {

@@ -80,12 +80,14 @@ psa_status_t status;
                 ctx->firmware_size_count = 0;
                 ctx->write_buffer_count = 0;
 
+#ifndef IOTC_IGNORE_FW_DOWNLOAD_SHA256_DIGEST
                 if(_nx_utility_base64_decode((UCHAR*)driver_req_ptr->nx_azure_iot_adu_agent_driver_firmware_sha256,
                                            driver_req_ptr->nx_azure_iot_adu_agent_driver_firmware_sha256_length,
                                            ctx->sha256, sizeof(ctx->sha256), &(ctx->sha256_size)))
                 {
                     driver_req_ptr -> nx_azure_iot_adu_agent_driver_status = NX_AZURE_IOT_FAILURE;
                 }
+#endif
             }
             else
             {
@@ -141,12 +143,13 @@ psa_status_t status;
             }
 
             /* Check the image signature. */
+#ifndef IOTC_IGNORE_FW_DOWNLOAD_SHA256_DIGEST
             if((PSA_FWU_MAX_DIGEST_SIZE != ctx->sha256_size) || (memcmp(info.digest, ctx->sha256, ctx->sha256_size) != 0))
             {              
                 driver_req_ptr -> nx_azure_iot_adu_agent_driver_status = NX_AZURE_IOT_FAILURE;
                 break;
             }
-
+#endif
             /* Set the new firmware for next boot.  */
             status = psa_fwu_install(ctx->download_image_id, &dependency_uuid, &dependency_version);
 
